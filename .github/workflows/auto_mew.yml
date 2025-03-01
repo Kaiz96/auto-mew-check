@@ -1,0 +1,24 @@
+name: Auto MEW Check
+
+on:
+  push:
+  schedule:
+    - cron: "0 * * * *"  # Chạy mỗi giờ
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Lấy mã nguồn
+        uses: actions/checkout@v4
+
+      - name: 🐍 Cài đặt Python & Selenium
+        run: |
+          sudo apt update
+          sudo apt install -y chromium-chromedriver
+          python -m pip install --upgrade pip
+          pip install selenium requests
+
+      - name: 🚀 Chạy Script kiểm tra MEW
+        run: python auto_mew.py
